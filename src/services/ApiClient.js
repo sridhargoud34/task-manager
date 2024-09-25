@@ -3,7 +3,7 @@ import axios from 'axios';
 // Create an Axios instance
 console.log('Base URL:', process.env.REACT_APP_API_BASE_URL)
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL, // Use the environment variable
+  baseURL: process.env.REACT_APP_API_BASE_URL, // Use the environment variable here
 });
 // Add a request interceptor
 // apiClient.interceptors.request.use((config) => {
