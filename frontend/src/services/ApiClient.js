@@ -2,8 +2,13 @@ import axios from 'axios';
 
 // Create an Axios instance
 console.log('Base URL:', process.env.REACT_APP_API_BASE_URL)
+console.log("token", localStorage.getItem("token"))
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL, // Use the environment variablne here
+ 
+  baseURL: process.env.REACT_APP_API_BASE_URL, 
+  headers:{
+    Authorization:`Bearer ${localStorage.getItem("token")}`
+  }// Use the environment variablne here
 });
 // Add a request interceptor
 // apiClient.interceptors.request.use((config) => {

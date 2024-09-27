@@ -1,37 +1,79 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { postLogin } from '../services/AuthContainerServices';
-const Login = ({ formData, handleChange }) => {
-    const [error, setError] = useState(null); // State for error messages
-    const [loading, setLoading] = useState(false);
+import { useAuth } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import '../assets/login.css'; // Make sure to import the CSS
+import { validateLogin } from '../common/Validation'; // Adjust the path as necessary
+
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [errors, setErrors] = useState({});
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = (e) => {
-      e.preventDefault();
-      postLogin(formData).then(res => {
-          console.log(res);
-      }).catch(err => console.log(err,"err"))
+    e.preventDefault();
+
+    // Validate input
+    const validationErrors = validateLogin(formData.email, formData.password);
+    console.log("validationErrors", validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    // Clear previous errors
+    setErrors({});
+
     // Handle login logic
-    console.log('Logging in with:', { email: formData.email, password: formData.password });
+    postLogin(formData)
+      .then(res => {
+        login(res?.token, "login");
+        navigate("/dashboard");
+      })
+      .catch(err => console.log(err, "err"));
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
       <input
-        type="email"
+     
         name="email"
         placeholder="Email"
         value={formData.email}
         onChange={handleChange}
-        required
+      
       />
+      {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
+
       <input
         type="password"
         name="password"
         placeholder="Password"
         value={formData.password}
         onChange={handleChange}
-        required
+    
       />
-      <button type="submit">Login</button>
+      {errors.password && <span style={{ color: 'red' }}>{errors.password}</span>}
+
+      <button className="auth" type="submit">Login</button>
+      <div className="registration-link">
+        <p>Don't have an account? <Link to="/register">Register here</Link></p>
+      </div>
     </form>
   );
 };
