@@ -5,7 +5,6 @@ import Sidenav from '../components/Sidenav';
 import { useAuth } from '../components/AuthContext';
 function TaskManagement() {
   const {user} = useAuth()
-  console.log(user,"user");
   return (
     <div className = "section">
       <Sidenav/>

@@ -4,7 +4,6 @@ import { useAuth } from './AuthContext';
 
 const PrivateRoute = ({ children }) => {
   const { token } = useAuth();
-console.log(token,"isAuthenticated");
   return token ? children : <Navigate to="/login" replace />;
 };
 

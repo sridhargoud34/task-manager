@@ -3,8 +3,8 @@ import { postLogin } from '../services/AuthContainerServices';
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import '../assets/login.css'; // Make sure to import the CSS
-import { validateLogin } from '../common/Validation'; // Adjust the path as necessary
+import '../assets/login.css'; 
+import { validateLogin } from '../common/Validation'; 
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -26,25 +26,17 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validate input
     const validationErrors = validateLogin(formData.email, formData.password);
-    console.log("validationErrors", validationErrors);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-
-    // Clear previous errors
     setErrors({});
-
-    // Handle login logic
     postLogin(formData)
       .then(res => {
         login(res?.token, "login");
         navigate("/dashboard");
       })
-      .catch(err => console.log(err, "err"));
   };
 
   return (

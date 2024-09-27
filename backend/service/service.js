@@ -27,22 +27,15 @@ reject({
 };
 const postTaskDataService = async (req, res) => {
   return new Promise((resolve, reject) => {
-    // Extracting data from the request body
     const data = req.body
     const { title, description, status, userId } = req.body;
-
-    // Check if userId is provided
     if (!userId) {
       return reject({
         error: true,
         message: "userId is required",
       });
     }
-
-    // Constructing the query
     const query = "INSERT INTO user_tasks (title, description, status, user_id) VALUES (?, ?, ?, ?)";
-
-    // Executing the query
     mySqlConnection.query(query, [title, description, status, userId], (err, rows) => {
       if (err) {
 
@@ -57,16 +50,13 @@ const postTaskDataService = async (req, res) => {
         error:false,
         message:"Task added successfully",
         task:data
-      }); // Resolve with the result of the query
+      }); 
     });
   });
 };
 const putTaskDataService = async (req, res) => {
   return new Promise((resolve, reject) => {
-    // Extracting data from the request body
     const { title, description, status, userId, taskId } = req.body;
-
-    // Check if userId and taskId are provided
     if (!userId) {
       return reject({
         error: true,
@@ -80,10 +70,7 @@ const putTaskDataService = async (req, res) => {
       });
     }
 
-    // Constructing the update query
     const query = "UPDATE user_tasks SET title = ?, description = ?, status = ? WHERE id = ? AND user_id = ?";
-
-    // Executing the query
     mySqlConnection.query(query, [title, description, status, taskId, userId], (err, result) => {
       if (err) {
         return reject({
@@ -91,8 +78,6 @@ const putTaskDataService = async (req, res) => {
           message: "Failed to update task",
         });
       }
-
-      // Check if any rows were affected (i.e., if a task was updated)
       if (result.affectedRows === 0) {
         return reject({
           error: true,
@@ -111,9 +96,7 @@ const putTaskDataService = async (req, res) => {
 
 const deleteTaskDataService = async (req, res) => {
   return new Promise((resolve, reject) => {
-    // Extracting taskId from the request body or query parameters
     const { taskId, userId } = req.query;
-    // Check if userId and taskId are provided
     if (!userId) {
       return reject({
         error: true,
@@ -126,11 +109,7 @@ const deleteTaskDataService = async (req, res) => {
         message: "taskId is required",
       });
     }
-
-    // Constructing the query to delete the task
     const query = "DELETE FROM user_tasks WHERE id = ? AND user_id = ?";
-
-    // Executing the query
     mySqlConnection.query(query, [taskId, userId], (err, result) => {
       if (err) {
         return reject({
@@ -139,7 +118,6 @@ const deleteTaskDataService = async (req, res) => {
         });
       }
 
-      // Check if any rows were affected (i.e., if a task was deleted)
       if (result.affectedRows === 0) {
         return reject({
           error: true,
@@ -165,7 +143,6 @@ const postRegisterService = async (req, res) => {
       });
     }
 else{
-   // Check if email already exists
   const checkEmailQuery = "SELECT 1 FROM main_users WHERE email_address = ?";
   mySqlConnection.query(checkEmailQuery, [email], async (err, results) => {
     if (err) {

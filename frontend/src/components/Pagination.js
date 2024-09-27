@@ -52,7 +52,6 @@ const Pagination = ({ userId }) => {
   };
 
   const handleEdit = (task) => {
-    console.log(task, "task");
     setTaskData({ ...task, userId: task?.user_id, taskId: task?.id });
     setShowForm(true);
     setEditingTask(true);
@@ -65,7 +64,6 @@ const Pagination = ({ userId }) => {
       );
     } else {
       setTasks((prevTasks) => [...prevTasks, newTask]);
-      console.log([...tasks, newTask], "okok");
     }
     setTaskData({
       title: "",
@@ -77,7 +75,6 @@ const Pagination = ({ userId }) => {
     setShowForm(false);
     setEditingTask(false);
   };
-  console.log(tasks, "okok");
   const columns = [
     { name: "S No", selector: (row) => row.id, sortable: true },
     { name: "Title", selector: (row) => row.title, sortable: true },

@@ -1,4 +1,4 @@
-// validation.js
+
 export const validateRegistration = (email, password, confirmPassword) => {
     const errors = {};
   
@@ -20,8 +20,6 @@ export const validateRegistration = (email, password, confirmPassword) => {
   
     return errors;
   };
-
-  // common/Validation.js
 export const validateLogin = (email, password) => {
     const errors = {};
   

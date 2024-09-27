@@ -37,9 +37,6 @@ const generateToken = (req, res) => {
             }
         
             const user = results[0];
-            // const hashedPassword = await bcrypt.hash(password, 10)
-            // console.log(hashedPassword,"hasg");
-            // Verify the password using bcrypt
             const isPasswordValid = await bcrypt.compare(password, user.password);
             if (!isPasswordValid) {
               return res.status(401).json({ error: "Username or password is incorrect." });
@@ -50,7 +47,7 @@ const generateToken = (req, res) => {
               const token = jwt.sign(
                 { id: user.id, username: user.username },
                 process.env.JWT_SECRET,
-                { expiresIn: '1h' } // you can set an expiration time here
+                { expiresIn: '1h' }
               );
               
               // Send the token to the client
