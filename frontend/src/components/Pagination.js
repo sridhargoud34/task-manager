@@ -76,7 +76,7 @@ const Pagination = ({ userId }) => {
     setEditingTask(false);
   };
   const columns = [
-    { name: "S No", selector: (row) => row.id, sortable: true },
+    // { name: "S No", selector: (row) => row.id, sortable: true },
     { name: "Title", selector: (row) => row.title, sortable: true },
     { name: "Description", selector: (row) => row.description, sortable: true },
     { name: "Status", selector: (row) => row.status, sortable: true },

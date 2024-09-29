@@ -12,7 +12,7 @@ reject({
 })
    }
    else{
-     const query = "select * from user_tasks where user_id = ?";
+     const query = "select * from user_tasks where user_id = ? order by id";
      mySqlConnection.query(query,[userId], (err, rows) => {
        if (err) {
          reject({
